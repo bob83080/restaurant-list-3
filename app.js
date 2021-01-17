@@ -17,15 +17,13 @@ app.get('/', (req, res) => {
 })
 
 app.get('/search', (req, res) => {
-  const movies = movieList.results.filter((movie) => {
-    return movie.title.toLowerCase().includes(req.query.keyword.toLowerCase())
-  })
-  res.render('index', { movies: movies, keyword: req.query.keyword })
+  const restaurants = restaurantList.results.filter(restaurant => { return restaurant.name.toLowerCase().includes(req.query.keyword.toLowerCase()) || restaurant.category.toLowerCase().includes(req.query.keyword.toLowerCase()) })
+  res.render('index', { restaurants: restaurants, keyword: req.query.keyword })
 })
 
-app.get('/movies/:movie_id', (req, res) => {
-  const movie = movieList.results.filter(movie => movie.id == req.params.movie_id)
-  res.render('show', { movie: movie[0] })
+app.get('/restaurants/:restaurant_id', (req, res) => {
+  const restaurant = restaurantList.results.find(restaurant => restaurant.id.toString() === req.params.restaurant_id)
+  res.render('show', { restaurant: restaurant })
 })
 
 app.listen(port, () => {
