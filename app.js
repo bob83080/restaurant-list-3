@@ -29,8 +29,9 @@ app.get('/', (req, res) => {
 })
 
 app.get('/search', (req, res) => {
-  const restaurants = restaurantList.results.filter(restaurant => { return restaurant.name.toLowerCase().includes(req.query.keyword.toLowerCase()) || restaurant.category.toLowerCase().includes(req.query.keyword.toLowerCase()) })
-  res.render('index', { restaurants: restaurants, keyword: req.query.keyword })
+  const keyword = req.query.keyword.trim()
+  const restaurants = restaurantList.filter(item => { return item.name.toLowerCase().includes(req.query.keyword.toLowerCase()) || item.category.toLowerCase().includes(keyword.toLowerCase()) })
+  res.render('index', { restaurant: restaurants, keyword })
 })
 
 app.get('/restaurants/:id', (req, res) => {
@@ -41,9 +42,11 @@ app.get('/restaurants/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.get('/create', (req, res) => res.render('create'))
+app.get('/new', (req, res) => {
+  return res.render('new')
+})
 
-app.post('/create/new', (req, res) => {
+app.post('/', (req, res) => {
   if (req.body.image.length === 0) { req.body.image = 'https://www.teknozeka.com/wp-content/uploads/2020/03/wp-header-logo-33.png' }
   const restaurant = req.body
   return Restaurant.create(restaurant)

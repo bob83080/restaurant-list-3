@@ -2,7 +2,7 @@
   <div class="row justify-content-center">
     <div class="create-form">
       <form action="/{{this._id}}/edit/update" method="POST">
-        <div class="form-row justify-content-center">
+        <div class="form-row py-5 justify-content-center">
           <div class="form-group col-md-6">
             <label for="name">Restaurant Name</label>
             <input type="text" class="form-control" id="name" name="name" value="{{this.name}}" placeholder="餐廳名稱">
@@ -53,13 +53,13 @@
             <input type="text" class="form-control" id="description" name="description"
               value="{{this.description}}"></input>
           </div>
-          <div class="form-group col-md-10 justify-content-start" style="margin-top: 10px;">
+          <div class="form-group col-md-10" style="margin-top: 10px; text-align: center;">
             <button type="submit" class="btn btn-info">Update</button>
             <a href="/restaurants/{{this._id}}">
               <button type="button" class="btn btn-success ml-3">Detail</button>
             </a>
             <a href="/">
-              <button type="button" class="btn btn-warning ml-3">Index</button>
+              <button type="button" class="btn btn-warning ml-3">Home Page</button>
             </a>
           </div>
         </div>
