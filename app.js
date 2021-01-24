@@ -12,15 +12,14 @@ mongoose.connect('mongodb://localhost/restaurant-list', { useNewUrlParser: true,
 db.on('error', () => { console.log('mongodb error!') })
 db.once('open', () => { console.log('mongodb connected!') })
 
-//.......................
-
+// --------路由設定-------- //
 
 app.engine('handlebars', exphbs({ defaultLayouts: 'main' }))
 app.set('view engine', 'handlebars')
 app.use((bodyParser.urlencoded({ extended: true })))
 app.use(express.static('public'))
 
-
+// --------主頁-------- //
 app.get('/', (req, res) => {
   Restaurant.find()
     .lean()
@@ -28,12 +27,14 @@ app.get('/', (req, res) => {
     .catch(error => console.error(error))
 })
 
+// --------搜尋-------- //
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword.trim()
   const restaurants = restaurantList.filter(item => { return item.name.toLowerCase().includes(req.query.keyword.toLowerCase()) || item.category.toLowerCase().includes(keyword.toLowerCase()) })
   res.render('index', { restaurant: restaurants, keyword })
 })
 
+// --------細節頁面-------- //
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
@@ -42,6 +43,7 @@ app.get('/restaurants/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
+// --------生產新頁面-------- //
 app.get('/new', (req, res) => {
   return res.render('new')
 })
@@ -54,6 +56,7 @@ app.post('/', (req, res) => {
     .catch(error => console.log(error))
 })
 
+// --------修改頁面-------- //
 app.get('/:id/edit', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
@@ -62,9 +65,9 @@ app.get('/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
+// --------更新頁面-------- //
 app.post('/:id/edit/update', (req, res) => {
   const id = req.params.id
-  // const body = req.body
   return Restaurant.findById(id)
     .then(restaurant => {
       restaurant.name = req.body.name
@@ -80,7 +83,7 @@ app.post('/:id/edit/update', (req, res) => {
     .then(() => res.redirect(`/restaurants/${id}`))
     .catch(error => console.log(error))
 })
-
+// --------刪除頁面-------- //
 app.post('/:id/delete', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
