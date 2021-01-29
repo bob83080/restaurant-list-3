@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 const exphbs = require('express-handlebars')
-const restaurantList = require('./restaurant.json').results
+const restaurantList = require('./models/restaurant')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const db = mongoose.connection
@@ -20,6 +20,7 @@ app.use((bodyParser.urlencoded({ extended: true })))
 app.use(express.static('public'))
 
 // --------主頁-------- //
+
 app.get('/', (req, res) => {
   Restaurant.find()
     .lean()
@@ -28,11 +29,38 @@ app.get('/', (req, res) => {
 })
 
 // --------搜尋-------- //
+// app.get('/search', (req, res) => {
+//   const keyword = req.query.keyword.trim()
+//   const restaurants = restaurantList.filter(item => {
+//     return item.category.includes(keyword) ||
+//       item.name.toLowerCase().includes(keyword.toLowerCase())
+//   })
+//   if (restaurants.length === 0) {
+//     res.render('notfound')
+//   } else {
+//     res.render('index', { restaurant: restaurants, keyword })
+//   }
+// })
+
 app.get('/search', (req, res) => {
-  const keyword = req.query.keyword.trim()
-  const restaurants = restaurantList.filter(item => { return item.name.toLowerCase().includes(req.query.keyword.toLowerCase()) || item.category.toLowerCase().includes(keyword.toLowerCase()) })
-  res.render('index', { restaurant: restaurants, keyword })
+  const keyword = req.query.keyword
+
+  return Restaurant.find() // 取出 Restaurant model 裡的所有資料
+    .lean() // 把 Mongoose 的 Model 物件轉換成乾淨的 JavaScript 資料陣列
+    .then(restaurants => {
+
+      const restaurant = restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(keyword.toLowerCase()))
+      console.log(restaurant)
+      res.render('index', { restaurant })
+    }) // 將資料傳給 index 樣板
+    .catch(error => console.error(error)) // 錯誤處理
 })
+
+// app.get('/search', (req, res) => {
+//   const keyword = req.query.keyword.trim()
+//   const restaurants = restaurantList.filter(item => { return item.name.toLowerCase().includes(req.query.keyword.toLowerCase()) || item.category.toLowerCase().includes(keyword.toLowerCase()) })
+//   res.render('index', { restaurant: restaurants, keyword })
+// })
 
 // --------細節頁面-------- //
 app.get('/restaurants/:id', (req, res) => {
