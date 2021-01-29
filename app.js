@@ -33,12 +33,10 @@ app.get('/', (req, res) => {
 app.get('/search', (req, res) => {
   const keyword = req.query.keyword
 
-  return Restaurant.find() // 
+  return Restaurant.find()
     .lean()
     .then(restaurants => {
-
       const restaurant = restaurants.filter(restaurant => restaurant.name.toLowerCase().includes(keyword.toLowerCase()))
-      console.log(restaurant)
       res.render('index', { restaurant })
     })
     .catch(error => console.error(error))
@@ -98,7 +96,7 @@ app.post('/:id/delete', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then(restaurant => restaurant.remove())
-    .then(() => res.redirect('/'))
+    .then(() => res.redirect('back'))
     .catch(error => console.log(error))
 })
 

@@ -37,8 +37,8 @@
           </div>
           <div class="form-group col-md-4">
             <label for="rating">Rating</label>
-            <input type="text" class="form-control" id="rating" name="rating" value="{{this.rating}}" placeholder="評分"
-              required>
+            <input type="number" step="0.1" min="0" max="5" class="form-control" id="rating" name="rating"
+              value="{{this.rating}}" placeholder="評分" required>
           </div>
           <div class="form-group col-10">
             <label for="image">Image</label>
