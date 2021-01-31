@@ -13,7 +13,4 @@ router.use('/search', search)
 router.use('/new', create)
 router.use('/sort', sort)
 
-
-
-
 module.exports = router

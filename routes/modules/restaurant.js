@@ -1,9 +1,8 @@
 const express = require('express')
 const router = express.Router()
-
 const Restaurant = require('../../models/restaurant')
 
-
+// --------細節頁面-------- //
 router.get('/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
@@ -13,10 +12,6 @@ router.get('/:id', (req, res) => {
 })
 
 // --------生產新頁面-------- //
-// router.get('/new', (req, res) => {
-//   return res.render('new')
-// })
-
 router.post('/new', (req, res) => {
   if (req.body.image.length === 0) { req.body.image = 'https://www.teknozeka.com/wp-content/uploads/2020/03/wp-header-logo-33.png' }
   const restaurant = req.body
@@ -60,8 +55,5 @@ router.delete('/:id', (req, res) => {
     .then(() => res.redirect('back'))
     .catch(error => console.log(error))
 })
-
-
-
 
 module.exports = router

@@ -8,11 +8,6 @@ const routes = require('./routes')
 
 require('./config/mongoose')
 
-
-
-const Restaurant = require('./models/restaurant')
-
-
 // --------路由設定-------- //
 
 app.engine('handlebars', exphbs({ defaultLayouts: 'main' }))
@@ -22,14 +17,6 @@ app.use(express.static('public'))
 app.use(methodOverride('_method'))
 app.use(routes)
 
-
-// --------主頁-------- //
-
-
-
-
-
-// --------細節頁面-------- //
 
 app.listen(port, () => {
   console.log(`Express is listening on localhost: ${port}`)
