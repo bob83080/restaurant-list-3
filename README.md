@@ -14,7 +14,7 @@
 
 ## 專案畫面
 
-![Home page](/public/restaurant-index.JPG)
+![Home page](/public/Photos/restaurant-newindex.JPG)
 ![Restaurant page](/public/restaurant-show.JPG)
 
 ## Installing - 專案安裝流程
