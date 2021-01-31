@@ -10,10 +10,11 @@
 * 點擊左上方"我的餐廳清單"可回到首頁。
 * 可於搜尋列輸入關鍵字搜尋符合關鍵字描述的餐廳，如餐廳名或種類。
 * 可以新增、修改、搜尋及刪除餐廳。
+* 可以選擇排序方式。
 
 ## 專案畫面
 
-![Home page](/public/restaurant-index.JPG)
+![Home page](/public/restaurant-newindex.JPG)
 ![Restaurant page](/public/restaurant-show.JPG)
 
 ## Installing - 專案安裝流程
